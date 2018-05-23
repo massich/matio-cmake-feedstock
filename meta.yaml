@@ -1,12 +1,10 @@
-{% set version = "1.5.12" %}
+{% set version = "1.5.11" %}
 package:
-  name: libmatio
+  name: matio-cmake
   version: {{ version }}
 
 source:
-  fn: matio-{{ version }}.tar.gz
-  url: https://github.com/tbeu/matio/releases/download/v{{ version }}/matio-{{ version }}.tar.gz
-  md5: 2968b5a95f05fab8b79ec87f9a6c0cac
+  path: /home/parietal/jmassich/repos/matio-cmake
 
 build:
   number: 0
@@ -49,5 +47,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - 183amir
-    - tbeu
+    - massich
