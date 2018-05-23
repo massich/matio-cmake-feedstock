@@ -1,0 +1,53 @@
+{% set version = "1.5.12" %}
+package:
+  name: libmatio
+  version: {{ version }}
+
+source:
+  fn: matio-{{ version }}.tar.gz
+  url: https://github.com/tbeu/matio/releases/download/v{{ version }}/matio-{{ version }}.tar.gz
+  md5: 2968b5a95f05fab8b79ec87f9a6c0cac
+
+build:
+  number: 0
+  skip: true  # [win and (py27 or win32)]
+  features:
+    - vc9   # [win and py27]
+    - vc10  # [win and py34]
+    - vc14  # [win and py>=35]
+
+requirements:
+  build:
+    - hdf5 1.8.18|1.8.18.*
+    - zlib 1.2.*
+    - python  # [win]
+    - vc 9   # [win and py27]
+    - vc 10  # [win and py34]
+    - vc 14  # [win and py>=35]
+  run:
+    - hdf5 1.8.18|1.8.18.*
+    - zlib 1.2.*
+    - vc 9   # [win and py27]
+    - vc 10  # [win and py34]
+    - vc 14  # [win and py>=35]
+
+test:
+  commands:
+    - test -e $PREFIX/include/matio.h      # [unix]
+    - test -e $PREFIX/lib/libmatio.a       # [unix]
+    - test -e $PREFIX/lib/libmatio.so      # [linux]
+    - test -e $PREFIX/lib/libmatio.dylib   # [osx]
+    - if not exist %PREFIX%\Library\bin\libmatio.dll exit 1  # [win]
+    - if not exist %PREFIX%\Library\lib\libmatio.lib exit 1  # [win]
+    - if not exist %PREFIX%\Library\include\matio.h exit 1  # [win]
+    - set xx=lib /list libmatio.lib # [win] 
+
+about:
+  home: https://sourceforge.net/projects/matio
+  license: BSD 2-Clause
+  summary: A C library for reading and writing MATLAB MAT files.
+
+extra:
+  recipe-maintainers:
+    - 183amir
+    - tbeu
