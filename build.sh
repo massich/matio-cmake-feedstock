@@ -1,19 +1,11 @@
 #!/bin/bash
 
-./configure \
-  --enable-mat73 \
-  --with-pic \
-  --enable-extended-sparse \
-  --prefix="${PREFIX}" \
-  --with-zlib="${PREFIX}" \
-  --with-hdf5="${PREFIX}"
-make
+mkdir build
+cd build
 
-if [[ `uname` == 'Darwin' ]];
-then
-	eval DYLD_FALLBACK_LIBRARY_PATH=$PREFIX/lib make check
-else
-	make check
-fi
-
+cmake \
+    -DCMAKE_PREFIX_PATH=${PREFIX} \
+    -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+    -DCMAKE_BUILD_TYPE=Release \
+    ..
 make install
